@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webcore 64 | N64 Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu">
+        <input type="text" id="search" placeholder="Search N64 Games...">
+        <div id="game-list"></div> 
+    </div>
+
+    <script>
+        fetch('games.json')
+            .then(res => res.json())
+            .then(games => {
+                const list = document.getElementById('game-list');
+                games.forEach(game => { n
+                    const item = document.createElement('div');
+                    item.innerHTML = `
+                        <a href="player.html?game=${game.slug}">
+                            <img src="assets/boxart/${game.slug}.png" alt="${game.title}">
+                            <p>${game.title}</p>
+                        </a>`;
+                    list.appendChild(item);
+                });
+            });
+    </script>
+</body>
+</html>
