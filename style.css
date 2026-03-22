@@ -1,0 +1,58 @@
+:root {
+    --bg-color: #0d1117;
+    --card-bg: #161b22;
+    --text-color: #c9d1d9;
+    --accent: #58a6ff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#gameSearch {
+    background: var(--card-bg);
+    border: 1px solid #30363d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    width: 300px;
+}
+
+#libraryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+}
+
+.game-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.game-card:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.game-card a { text-decoration: none; color: inherit; }
