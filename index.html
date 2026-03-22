@@ -2,30 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Webcore 64 | N64 Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcore 64 | Library</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="menu">
-        <input type="text" id="search" placeholder="Search N64 Games...">
-        <div id="game-list"></div> 
-    </div>
+    <header>
+        <img src="assets/logo.png" alt="Webcore 64 Logo" class="logo">
+        <input type="text" id="gameSearch" placeholder="Search your N64 library...">
+    </header>
+
+    <main id="libraryGrid">
+        <!-- Games will be injected here by JavaScript -->
+    </main>
 
     <script>
-        fetch('games.json')
-            .then(res => res.json())
-            .then(games => {
-                const list = document.getElementById('game-list');
-                games.forEach(game => { n
-                    const item = document.createElement('div');
-                    item.innerHTML = `
-                        <a href="player.html?game=${game.slug}">
-                            <img src="assets/boxart/${game.slug}.png" alt="${game.title}">
-                            <p>${game.title}</p>
-                        </a>`;
-                    list.appendChild(item);
-                });
-            });
+        const grid = document.getElementById('libraryGrid');
+        const search = document.getElementById('gameSearch');
+
+        async function loadLibrary() {
+            const response = await fetch('games.json');
+            const games = await response.json();
+
+            function displayGames(filter = '') {
+                grid.innerHTML = '';
+                games.filter(g => g.title.toLowerCase().includes(filter.toLowerCase()))
+                     .forEach(game => {
+                        const card = document.createElement('div');
+                        card.className = 'game-card';
+                        card.innerHTML = `
+                            <a href="player.html?game=${game.slug}">
+                                <img src="assets/boxart/${game.slug}.png" onerror="this.src='assets/boxart/default.png'">
+                                <h3>${game.title}</h3>
+                            </a>`;
+                        grid.appendChild(card);
+                     });
+            }
+
+            search.addEventListener('input', (e) => displayGames(e.target.value));
+            displayGames();
+        }
+        loadLibrary();
     </script>
 </body>
 </html>
