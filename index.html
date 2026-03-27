@@ -8,41 +8,32 @@
 </head>
 <body>
     <header>
-        <img src="assets/logo.png" alt="Webcore 64 Logo" class="logo">
-        <input type="text" id="gameSearch" placeholder="Search your N64 library...">
+        <img src="assets/logo.png" alt="Webcore 64" class="logo">
+        <h1>Webcore 64 Library</h1>
     </header>
 
-    <main id="libraryGrid">
+    <main id="game-grid" class="grid-container">
         <!-- Games will be injected here by JavaScript -->
     </main>
 
     <script>
-        const grid = document.getElementById('libraryGrid');
-        const search = document.getElementById('gameSearch');
-
-        async function loadLibrary() {
-            const response = await fetch('games.json');
-            const games = await response.json();
-
-            function displayGames(filter = '') {
-                grid.innerHTML = '';
-                games.filter(g => g.title.toLowerCase().includes(filter.toLowerCase()))
-                     .forEach(game => {
-                        const card = document.createElement('div');
-                        card.className = 'game-card';
-                        card.innerHTML = `
-                            <a href="player.html?game=${game.slug}">
-                                <img src="assets/boxart/${game.slug}.png" onerror="this.src='assets/boxart/default.png'">
-                                <h3>${game.title}</h3>
-                            </a>`;
-                        grid.appendChild(card);
-                     });
-            }
-
-            search.addEventListener('input', (e) => displayGames(e.target.value));
-            displayGames();
-        }
-        loadLibrary();
+        fetch('games.json')
+            .then(response => response.json())
+            .then(games => {
+                const grid = document.getElementById('game-grid');
+                games.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    card.innerHTML = `
+                        <img src="${game.boxart}" alt="${game.title}">
+                        <h3>${game.title}</h3>
+                    `;
+                    card.onclick = () => {
+                        window.location.href = `player.html?game=${encodeURIComponent(game.rom)}`;
+                    };
+                    grid.appendChild(card);
+                });
+            });
     </script>
 </body>
 </html>
