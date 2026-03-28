@@ -9,5 +9,6 @@
   { "title": "Super Smash Bros.", "rom": "roms/smash_bros.zip", "boxart": "assets/boxart/smash_bros.png" },
   { "title": "Paper Mario", "rom": "roms/paper_mario.zip", "boxart": "assets/boxart/paper_mario.png" },
   { "title": "Wave Race 64", "rom": "roms/wave_race_64.zip", "boxart": "assets/boxart/wave_race_64.png" },
-  { "title": "Mega Man 64", "rom": "roms/megaman64.zip", "boxart": "assets/boxart/megaman64.png" }
+  { "title": "Mega Man 64", "rom": "roms/megaman64.zip", "boxart": "assets/boxart/megaman64.png" },
+  { "title": "Banjo-Tooie", "rom": "roms/banjo_tooie.zip", "boxart": "assets/boxart/banjo_tooie.png" }
 ]
