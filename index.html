@@ -9,18 +9,28 @@
 <body>
     <header>
         <img src="assets/logo.png" alt="Webcore 64" class="logo">
-        <h1>Webcore 64 Library</h1>
+        <h1>Webcore 64</h1>
     </header>
 
     <main id="game-grid" class="grid-container">
-        <!-- Games will be injected here by JavaScript -->
+        <!-- Games inject here -->
     </main>
 
     <script>
+        // Register Service Worker for Offline 404 support
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+
+        // Fetch games from database
         fetch('games.json')
-            .then(response => response.json())
+            .then(res => {
+                if (!res.ok) throw new Error('Could not find games.json');
+                return res.json();
+            })
             .then(games => {
                 const grid = document.getElementById('game-grid');
+                grid.innerHTML = ''; // Clear loading state
                 games.forEach(game => {
                     const card = document.createElement('div');
                     card.className = 'game-card';
@@ -34,6 +44,10 @@
                     grid.appendChild(card);
                 });
             })
-</script>
+            .catch(err => {
+                console.error('Webcore Error:', err);
+                document.getElementById('game-grid').innerHTML = `<p style="color:red">Error loading library. Check console (F12).</p>`;
+            });
+    </script>
 </body>
 </html>
