@@ -1,12 +1,12 @@
 [
-  { "title": "The Legend of Zelda: Ocarina of Time", "rom": "roms/zelda_oot.zip", "boxart": "assets/boxart/zelda_oot.png" },
-  { "title": "Super Mario 64", "rom": "roms/sm64.zip", "boxart": "assets/boxart/sm64.png" },
-  { "title": "The Legend of Zelda: Majora's Mask", "rom": "roms/zelda_mm.zip", "boxart": "assets/boxart/zelda_mm.png" },
-  { "title": "GoldenEye 007", "rom": "roms/goldeneye.zip", "boxart": "assets/boxart/goldeneye.png" },
-  { "title": "Banjo-Kazooie", "rom": "roms/banjo_kazooie.zip", "boxart": "assets/boxart/banjo_kazooie.png" },
-  { "title": "Star Fox 64", "rom": "roms/starfox64.zip", "boxart": "assets/boxart/starfox64.png" },
-  { "title": "Perfect Dark", "rom": "roms/perfect_dark.zip", "boxart": "assets/boxart/perfect_dark.png" },
-  { "title": "Super Smash Bros.", "rom": "roms/smash_bros.zip", "boxart": "assets/boxart/smash_bros.png" },
-  { "title": "Paper Mario", "rom": "roms/paper_mario.zip", "boxart": "assets/boxart/paper_mario.png" },
-  { "title": "Wave Race 64", "rom": "roms/wave_race_64.zip", "boxart": "assets/boxart/wave_race_64.png" }
+  { "title": "The Legend of Zelda: Ocarina of Time", "rom": "roms/zelda_oot.z64", "boxart": "assets/boxart/zelda_oot.png" },
+  { "title": "Super Mario 64", "rom": "roms/sm64.z64", "boxart": "assets/boxart/sm64.png" },
+  { "title": "The Legend of Zelda: Majora's Mask", "rom": "roms/zelda_mm.z64", "boxart": "assets/boxart/zelda_mm.png" },
+  { "title": "GoldenEye 007", "rom": "roms/goldeneye.z64", "boxart": "assets/boxart/goldeneye.png" },
+  { "title": "Banjo-Kazooie", "rom": "roms/banjo_kazooie.z64", "boxart": "assets/boxart/banjo_kazooie.png" },
+  { "title": "Star Fox 64", "rom": "roms/starfox64.z64", "boxart": "assets/boxart/starfox64.png" },
+  { "title": "Perfect Dark", "rom": "roms/perfect_dark.z64", "boxart": "assets/boxart/perfect_dark.png" },
+  { "title": "Super Smash Bros.", "rom": "roms/smash_bros.z64", "boxart": "assets/boxart/smash_bros.png" },
+  { "title": "Paper Mario", "rom": "roms/paper_mario.z64", "boxart": "assets/boxart/paper_mario.png" },
+  { "title": "Wave Race 64", "rom": "roms/wave_race_64.z64", "boxart": "assets/boxart/wave_race_64.png" }
 ]
