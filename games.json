@@ -1,13 +1,13 @@
 [
-  { "title": "The Legend of Zelda: Ocarina of Time", "rom": "zelda_oot.zip", "boxart": "zelda_oot.png" },
-  { "title": "Super Mario 64", "rom": "sm64.zip", "boxart": "sm64.png" },
-  { "title": "The Legend of Zelda: Majora's Mask", "rom": "zelda_mm.zip", "boxart": "zelda_mm.png" },
-  { "title": "GoldenEye 007", "rom": "goldeneye.zip", "boxart": "goldeneye.png" },
-  { "title": "Banjo-Kazooie", "rom": "banjo_kazooie.zip", "boxart": "banjo_kazooie.png" },
-  { "title": "Star Fox 64", "rom": "starfox64.zip", "boxart": "starfox64.png" },
-  { "title": "Perfect Dark", "rom": "perfect_dark.zip", "boxart": "perfect_dark.png" },
-  { "title": "Super Smash Bros.", "rom": "smash_bros.zip", "boxart": "smash_bros.png" },
-  { "title": "Paper Mario", "rom": "paper_mario.zip", "boxart": "paper_mario.png" },
-  { "title": "Wave Race 64", "rom": "wave_race_64.zip", "boxart": "wave_race_64.png" },
-  { "title": "Mega Man 64", "rom": "megaman64.zip", "boxart": "megaman64.png" }
+  { "title": "The Legend of Zelda: Ocarina of Time", "rom": "roms/zelda_oot.zip", "boxart": "assets/boxart/zelda_oot.png" },
+  { "title": "Super Mario 64", "rom": "roms/sm64.zip", "boxart": "assets/boxart/sm64.png" },
+  { "title": "The Legend of Zelda: Majora's Mask", "rom": "roms/zelda_mm.zip", "boxart": "assets/boxart/zelda_mm.png" },
+  { "title": "GoldenEye 007", "rom": "roms/goldeneye.zip", "boxart": "assets/boxart/goldeneye.png" },
+  { "title": "Banjo-Kazooie", "rom": "roms/banjo_kazooie.zip", "boxart": "assets/boxart/banjo_kazooie.png" },
+  { "title": "Star Fox 64", "rom": "roms/starfox64.zip", "boxart": "assets/boxart/starfox64.png" },
+  { "title": "Perfect Dark", "rom": "roms/perfect_dark.zip", "boxart": "assets/boxart/perfect_dark.png" },
+  { "title": "Super Smash Bros.", "rom": "roms/smash_bros.zip", "boxart": "assets/boxart/smash_bros.png" },
+  { "title": "Paper Mario", "rom": "roms/paper_mario.zip", "boxart": "assets/boxart/paper_mario.png" },
+  { "title": "Wave Race 64", "rom": "roms/wave_race_64.zip", "boxart": "assets/boxart/wave_race_64.png" },
+  { "title": "Mega Man 64", "rom": "roms/megaman64.zip", "boxart": "assets/boxart/megaman64.png" }
 ]
