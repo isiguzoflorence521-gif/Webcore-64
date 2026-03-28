@@ -1,49 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Webcore 64 | Player</title>
-    <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
-        #game-container { width: 100vw; height: 100vh; }
-    </style>
+    <style>body,html{margin:0;padding:0;width:100%;height:100%;background:#000;overflow:hidden;}#game{width:100vw;height:100vh;}</style>
 </head>
 <body>
-    <div id="game-container"></div>
-
-    <script src="config.js"></script>
+    <div id="game"></div>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const gameUrl = urlParams.get('game');
-
-        async function startWebcore() {
-            if (!gameUrl) { window.location.href = 'index.html'; return; }
-
-            try {
-                // 1. Fetch ROM as Binary Blob
-                const response = await fetch(gameUrl);
-                if (!response.ok) throw new Error("ROM not found");
-                const blob = await response.blob();
-                const blobUrl = URL.createObjectURL(blob);
-
-                // 2. EmulatorJS CDN Configuration
-                window.EJS_player = '#game-container';
-                window.EJS_core = 'n64'; 
-                window.EJS_gameUrl = blobUrl; 
-                window.EJS_pathtodata = 'https://cdn.emulatorjs.org';
-                window.EJS_settings = typeof webcoreConfig !== 'undefined' ? webcoreConfig : {};
-
-                // 3. Load the Loader from CDN
-                const loader = document.createElement('script');
-                loader.src = 'https://cdn.emulatorjs.orgloader.js';
-                document.body.appendChild(loader);
-
-            } catch (err) {
-                console.error("Boot Error:", err);
-                window.location.href = '404.html';
-            }
-        }
-        startWebcore();
+        const params = new URLSearchParams(window.location.search);
+        const rom = params.get('game');
+        if (rom) {
+            window.EJS_player = '#game';
+            window.EJS_core = 'n64';
+            window.EJS_gameUrl = rom;
+            // This pulls the "brain" from a professional server so it won't crash
+            window.EJS_pathtodata = 'https://cdn.emulatorjs.org';
+        } else { window.location.href = 'index.html'; }
     </script>
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </body>
 </html>
