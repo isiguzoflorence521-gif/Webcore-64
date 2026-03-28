@@ -1,26 +1,26 @@
-e<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Webcore 64 Player</title>
-    <style>body, html, #game { width: 100%; height: 100%; margin: 0; background: #000; overflow: hidden; }</style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="game"></div>
-    <!-- Load custom performance and key fixes -->
+<body class="player-body">
+    <div id="game-container"></div>
     <script src="config.js"></script>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const gameSlug = params.get('game');
-
-        window.EJS_player = '#game';
-        window.EJS_core = 'n64'; // Uses Mupen64Plus/Parallel
-        window.EJS_gameUrl = `roms/${gameSlug}.zip`;
-        window.EJS_pathtodata = 'https://cdn.emulatorjs.org';
-        
-        // Path for mods if applicable
-        window.EJS_gameParentUrl = 'mods/'; 
+        const urlParams = new URLSearchParams(window.location.search);
+        const gamePath = urlParams.get('game');
+        if (gamePath) {
+            EJS_player = '#game-container';
+            EJS_core = 'n64'; 
+            EJS_gameUrl = gamePath;
+            EJS_pathtodata = 'data/'; 
+            EJS_settings = webcoreConfig; 
+        } else {
+            window.location.href = 'index.html';
+        }
     </script>
-    <script src="https://cdn.emulatorjs.orgloader.js"></script>
+    <script src="https://www.emulatorjs.com"></script>
 </body>
 </html>
