@@ -8,5 +8,6 @@
   { "title": "Perfect Dark", "rom": "perfect_dark.zip", "boxart": "perfect_dark.png" },
   { "title": "Super Smash Bros.", "rom": "smash_bros.zip", "boxart": "smash_bros.png" },
   { "title": "Paper Mario", "rom": "paper_mario.zip", "boxart": "paper_mario.png" },
-  { "title": "Wave Race 64", "rom": "wave_race_64.zip", "boxart": "wave_race_64.png" }
+  { "title": "Wave Race 64", "rom": "wave_race_64.zip", "boxart": "wave_race_64.png" },
+  { "title": "Mega Man 64", "rom": "megaman64.zip", "boxart": "megaman64.png" }
 ]
