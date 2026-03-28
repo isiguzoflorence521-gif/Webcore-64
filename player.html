@@ -2,25 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Webcore 64 Player</title>
+    <title>Webcore 64 | Player</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="player-body">
     <div id="game-container"></div>
+
+    <!-- Configuration Script -->
     <script src="config.js"></script>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const gamePath = urlParams.get('game');
-        if (gamePath) {
-            EJS_player = '#game-container';
-            EJS_core = 'n64'; 
-            EJS_gameUrl = gamePath;
-            EJS_pathtodata = 'data/'; 
-            EJS_settings = webcoreConfig; 
-        } else {
-            window.location.href = 'index.html';
+        const gameUrl = urlParams.get('game');
+
+        async function loadWebcoreGame() {
+            if (!gameUrl) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                // 1. Fetch as ArrayBuffer to bypass GitHub's strict MIME types
+                const response = await fetch(gameUrl);
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                
+                const data = await response.arrayBuffer();
+                
+                // 2. Convert binary data to a Blob (Force Binary type)
+                const blob = new Blob([data], { type: 'application/octet-stream' });
+                const blobUrl = URL.createObjectURL(blob);
+
+                // 3. EmulatorJS Setup
+                window.EJS_player = '#game-container';
+                window.EJS_core = 'n64'; 
+                window.EJS_gameUrl = blobUrl; // Points to the clean binary blob
+                window.EJS_pathtodata = 'data/';
+                window.EJS_settings = webcoreConfig;
+
+                // 4. Inject the loader only after the blob is ready
+                const loader = document.createElement('script');
+                loader.src = 'https://www.emulatorjs.com';
+                document.body.appendChild(loader);
+
+            } catch (err) {
+                console.error("Webcore Loading Failure:", err);
+                // Redirect to 404/Offline if the fetch fails
+                window.location.href = '404.html';
+            }
         }
+
+        // Start the engine
+        loadWebcoreGame();
     </script>
-    <script src="https://www.emulatorjs.com"></script>
 </body>
 </html>
+
