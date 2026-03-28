@@ -5,11 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcore 64 | Library</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific tweaks for smaller, cleaner cards */
+        .grid-container {
+            display: grid;
+            /* Changed minmax from 180px to 140px for smaller cards */
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            text-align: center;
+            padding: 30px 10px;
+        }
+
+        .logo {
+            max-width: 220px; /* Controlled logo size */
+            height: auto;
+        }
+
+        .tagline {
+            color: #888;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .game-card h3 {
+            font-size: 12px; /* Smaller text for smaller cards */
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
-    <header>
+
+    <header class="logo-container">
+        <!-- Your Google Drawings Logo -->
         <img src="assets/logo.png" alt="Webcore 64" class="logo">
-        <h1>Webcore 64</h1>
+        <div class="tagline">Classic Power, Modern Web</div>
     </header>
 
     <main id="game-grid" class="grid-container">
@@ -17,20 +54,15 @@
     </main>
 
     <script>
-        // Register Service Worker for Offline 404 support
+        // Service Worker for Offline/404
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
 
-        // Fetch games from database
         fetch('games.json')
-            .then(res => {
-                if (!res.ok) throw new Error('Could not find games.json');
-                return res.json();
-            })
+            .then(res => res.json())
             .then(games => {
                 const grid = document.getElementById('game-grid');
-                grid.innerHTML = ''; // Clear loading state
                 games.forEach(game => {
                     const card = document.createElement('div');
                     card.className = 'game-card';
@@ -44,10 +76,7 @@
                     grid.appendChild(card);
                 });
             })
-            .catch(err => {
-                console.error('Webcore Error:', err);
-                document.getElementById('game-grid').innerHTML = `<p style="color:red">Error loading library. Check console (F12).</p>`;
-            });
+            .catch(err => console.error("Library Load Error:", err));
     </script>
 </body>
 </html>
