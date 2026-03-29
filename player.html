@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>N64 Emulator</title>
-    <script src="https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS/dist/emulator.js"></script>
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </head>
 <body>
-    <h1>N64 Emulator</h1>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const romUrl = urlParams.get('game');
+        // Function to get URL parameters
+        function getURLParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
 
-        if (romUrl) {
-            const blobUrl = URL.createObjectURL(new Blob([new Uint8Array(await (await fetch(romUrl)).arrayBuffer())]));
-            const emulator = new Emulator();
-            emulator.loadROM(blobUrl);
-            emulator.run();
+        // Load the game from the URL parameter
+        var game = getURLParameter('game');
+        if (game) {
+            const romLoader = new EmulatorJS.RomLoader();
+            romLoader.load(game + '.zip', function(rom) {
+                const emulator = new EmulatorJS.N64();
+                emulator.loadRom(rom);
+                emulator.setFullscreen(true);
+                emulator.start();
+            });
         } else {
-            document.body.innerHTML += '<p>No game URL provided. Please add ?game=YOUR_ROM_URL in the URL.</p>';
+            document.body.innerHTML = '<h1>Please provide a game parameter in the URL.</h1>'; 
         }
     </script>
 </body>
