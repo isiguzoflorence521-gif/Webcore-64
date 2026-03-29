@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Webcore 64 | Player</title>
-    <style>body,html{margin:0;padding:0;width:100%;height:100%;background:#000;overflow:hidden;}#game{width:100vw;height:100vh;}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <script src="config.js" defer></script>
 </head>
 <body>
-    <div id="game"></div>
+    <h1>Welcome to the Game</h1>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const rom = params.get('game');
-        if (rom) {
-            window.EJS_player = '#game';
-            window.EJS_core = 'n64';
-            window.EJS_gameUrl = rom;
-            // This pulls the "brain" from a professional server so it won't crash
-            window.EJS_pathtodata = 'https://cdn.emulatorjs.org';
-        } else { window.location.href = 'index.html'; }
+        window.onload = function () {
+            // Custom error handling
+            window.onerror = function (message, source, lineno, colno, error) {
+                console.error(`Error occurred: ${message} at ${source}:${lineno}:${colno}`);
+                alert('An error occurred. Please try refreshing the page.');
+            };
+        };
     </script>
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </body>
 </html>
