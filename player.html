@@ -3,31 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N64 Emulator</title>
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+    <title>Webcore 64 - N64 Emulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        #emulator {
+            width: 100%;
+            max-height: 90vh;
+            background: #000;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #ff4500;
+        }
+        
+        .error {
+            color: #ff6b35;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #ff6b35;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div id="loading" class="loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Loading emulator...</p>
+        </div>
+        <div id="emulator"></div>
+        <div id="error" class="error" style="display:none;"></div>
+        <div class="controls">
+            <button onclick="goHome()">Back to Home</button>
+            <button onclick="toggleFullscreen()">Fullscreen</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
     <script>
-        // Function to get URL parameters
+        let EJS_player = null;
+
+        // Get URL parameters
         function getURLParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'), results = regex.exec(location.search);
+            name = name.replace(/["]/, '\[\]').replace(/["]/, '\[\]');
+            var regex = new RegExp('[\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Load the game from the URL parameter
-        var game = getURLParameter('game');
-        if (game) {
-            const romLoader = new EmulatorJS.RomLoader();
-            romLoader.load(game + '.zip', function(rom) {
-                const emulator = new EmulatorJS.N64();
-                emulator.loadRom(rom);
-                emulator.setFullscreen(true);
-                emulator.start();
-            });
-        } else {
-            document.body.innerHTML = '<h1>Please provide a game parameter in the URL.</h1>'; 
+        // Initialize emulator
+        function initEmulator() {
+            const romParam = getURLParameter('game');
+            const romUrl = getURLParameter('url');
+            
+            if (!romParam && !romUrl) {
+                showError('Please provide a game parameter or URL in the query string.');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            
+            try {
+                // Determine the actual ROM URL
+                let finalRomUrl = romUrl;
+                if (!finalRomUrl && romParam) {
+                    // If only game name provided, construct the URL
+                    finalRomUrl = `./roms/${romParam}`;
+                    // Try with .z64, .n64, or .rom extensions
+                    if (!finalRomUrl.includes('.')) {
+                        finalRomUrl = `${finalRomUrl}.z64`;
+                    }
+                }
+
+                // Configure EmulatorJS
+                EJS_player = new EJS({
+                    element: document.getElementById('emulator'),
+                    executableFolder: 'https://cdn.emulatorjs.org/stable/',
+                    gameUrl: finalRomUrl,
+                    core: 'mupen64plus',
+                    volume: 1.0,
+                    autoplay: true,
+                    showPlayButton: true
+                });
+
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                showError('Failed to initialize emulator: ' + error.message);
+                console.error('Emulator initialization error:', error);
+            }
         }
+
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('emulator').style.display = 'none';
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'block';
+            errorDiv.innerHTML = `<h2>Error</h2><p>${message}</p><p>Make sure the ROM file path is correct and accessible.</p>`;
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+
+        function toggleFullscreen() {
+            if (EJS_player && EJS_player.fullscreenToggle) {
+                EJS_player.fullscreenToggle();
+            } else if (document.getElementById('emulator').requestFullscreen) {
+                document.getElementById('emulator').requestFullscreen();
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initEmulator);
     </script>
 </body>
 </html>
