@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
-    <script src="config.js" defer></script>
+    <title>N64 Emulator</title>
+    <script src="https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS/dist/emulator.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Game</h1>
+    <h1>N64 Emulator</h1>
     <script>
-        window.onload = function () {
-            // Custom error handling
-            window.onerror = function (message, source, lineno, colno, error) {
-                console.error(`Error occurred: ${message} at ${source}:${lineno}:${colno}`);
-                alert('An error occurred. Please try refreshing the page.');
-            };
-        };
+        const urlParams = new URLSearchParams(window.location.search);
+        const romUrl = urlParams.get('game');
+
+        if (romUrl) {
+            const blobUrl = URL.createObjectURL(new Blob([new Uint8Array(await (await fetch(romUrl)).arrayBuffer())]));
+            const emulator = new Emulator();
+            emulator.loadROM(blobUrl);
+            emulator.run();
+        } else {
+            document.body.innerHTML += '<p>No game URL provided. Please add ?game=YOUR_ROM_URL in the URL.</p>';
+        }
     </script>
 </body>
 </html>
