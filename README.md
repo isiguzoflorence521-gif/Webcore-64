@@ -1,5 +1,5 @@
+![Project Logo](assets/logo.png)
 # 🚀 Webcore 64
-![Webcore 64 Logo](assets/logo.png)
 
 
 **Webcore 64** is a high-performance, browser-based Nintendo 64 emulator library specifically optimized for **ChromeOS** and low-power hardware. It features a searchable database of the entire N64 library and custom configurations to fix common emulation bugs.
