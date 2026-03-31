@@ -29,26 +29,26 @@
     <div id="game-container"></div>
 
     <script>
-        // 1. EXTRACT ROM NAME: Grabs filename from URL (e.g., player.html?game=sm64.zip)
-        const params = new URLSearchParams(window.location.search);
-        const gameFile = params.get('game');
+        /// 1. EXTRACT ROM NAME
+const params = new URLSearchParams(window.location.search);
+const gameFile = params.get('game');
 
-        if (!gameFile) {
-            alert("No ROM found! Returning to Menu.");
-            window.location.href = 'index.html';
-        }
+if (!gameFile) {
+    alert("No ROM found! Returning to Menu.");
+    window.location.href = 'index.html';
+}
 
-        // 2. EMULATOR CONFIG: Points to your specific folder hierarchy
-        var EJS_player = '#game-container';
-        var EJS_core = 'n64';
-        var EJS_gameUrl = 'roms/' + gameFile; // Directly looks in your /roms/ folder
-        var EJS_pathtodata = 'data/'; // Finds n64.js and n64.wasm in /data/
+// 2. ATTACH CONFIG TO WINDOW (Required for loader.js to find them)
+window.EJS_player = '#game-container';
+window.EJS_core = 'n64';
+window.EJS_gameUrl = 'roms/' + gameFile; 
+window.EJS_pathtodata = 'data/';         // Must have the trailing slash
+window.EJS_startOnLoaded = true;         // Auto-starts once ROM is ready
 
-        // 3. CHROMEOS & PERFORMANCE: Config settings
-        var EJS_threads = true;
-        var EJS_performance = 'high';
-        var EJS_mouse = false;
-        var EJS_multitap = false;
+// 3. OPTIONAL SETTINGS
+window.EJS_threads = false;              // Try setting to FALSE if it hangs on a black screen
+window.EJS_performance = 'high';
+
     </script>
 
     <!-- 4. ENGINE LOADER: The script that starts the WASM engine -->
