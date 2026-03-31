@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player</title>
-    <script>
-        async function loadGame() {
-            // Get the game URL from query parameters
-            const params = new URLSearchParams(window.location.search);
-            const gameUrl = params.get('gameUrl');
-
-            // Fetch games.json file
-            const response = await fetch('games.json');
-            const games = await response.json();
-
-            // Find the game title based on the game URL
-            const game = games.find(g => g.url === gameUrl);
-
-            if (game) {
-                // Display the game title
-                document.getElementById('gameTitle').innerText = game.title;
-                // Optionally load the game in an iframe or another method
-                document.getElementById('gameFrame').src = game.url;
-            } else {
-                document.getElementById('gameTitle').innerText = 'Game not found';
-            }
-        }
-    </script>
+    <title>Webcore-64 Player</title>
+    <!-- Your main styles and performance fixes -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="data/emu-css.css">
+    <script src="config.js"></script>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
+        #game-container { width: 100vw; height: 100vh; }
+    </style>
 </head>
-<body onload="loadGame()">
-    <h1 id="gameTitle">Loading...</h1>
-    <iframe id="gameFrame" width="800" height="600"></iframe>
+<body>
+
+    <div id="game-container"></div>
+
+    <script>
+        // 1. EXTRACT ROM NAME: Grabs filename from URL (e.g., player.html?game=sm64.zip)
+        const params = new URLSearchParams(window.location.search);
+        const gameFile = params.get('game');
+
+        if (!gameFile) {
+            alert("No ROM found! Returning to Menu.");
+            window.location.href = 'index.html';
+        }
+
+        // 2. EMULATOR CONFIG: Points to your specific folder hierarchy
+        var EJS_player = '#game-container';
+        var EJS_core = 'n64';
+        var EJS_gameUrl = 'roms/' + gameFile; // Directly looks in your /roms/ folder
+        var EJS_pathtodata = 'data/';         // Finds n64.js and n64.wasm in /data/
+        
+        // 3. CHROMEOS & PERFORMANCE: Config settings
+        var EJS_threads = true;
+        var EJS_performance = 'high';
+        var EJS_mouse = false;
+        var EJS_multitap = false;
+    </script>
+
+    <!-- 4. ENGINE LOADER: The script that starts the WASM engine -->
+    <script src="data/loader.js"></script>
+
 </body>
 </html>
