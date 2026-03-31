@@ -27,47 +27,49 @@
 ```text
 Webcore-64/
 │
-├── index.html                # Main Menu (loads games.json)
-├── player.html               # Emulator runtime page
-├── config.js                 # WASD controls + ChromeOS tweaks
-├── games.json                # Game database
-├── style.css                 # Dark UI theme
-├── .gitignore                # Ignores /saves/
-│
-├── data/                     # EmulatorJS core files
-│   ├── emu-css.css           # Emulator display styles
-│   ├── loader.js             # EmulatorJS loader (required)
-│   ├── n64.js                # N64 JavaScript core
-│   └── n64.wasm              # N64 WebAssembly binary
-│
-├── roms/                     # N64 ROMs (ZIP only)
-│   ├── sm64.zip
-│   ├── zelda_oot.zip
-│   ├── zelda_mm.zip
-│   ├── goldeneye.zip
-│   ├── banjo_kazooie.zip
-│   ├── banjo_tooie.zip
-│   ├── starfox64.zip
-│   ├── perfect_dark.zip
-│   ├── smash_bros.zip
-│   ├── paper_mario.zip
-│   ├── wave_race_64.zip
-│   └── megaman64.zip
+├── .github/
+│   └── workflows/
+│       ├── node.js.yml            # Node / CI workflow (optional)
+│       └── static.yml             # GitHub Pages deployment workflow
 │
 ├── assets/
-│   ├── logo.png              # App logo
-│   └── boxart/               # Game thumbnails
-│       ├── sm64.png
-│       ├── zelda_oot.png
-│       ├── zelda_mm.png
-│       ├── goldeneye.png
+│   ├── logo.png                   # App logo
+│   └── boxart/                    # Game thumbnails
 │       ├── banjo_kazooie.png
 │       ├── banjo_tooie.png
-│       ├── starfox64.png
-│       ├── perfect_dark.png
-│       ├── smash_bros.png
+│       ├── goldeneye.png
+│       ├── megaman64.png
 │       ├── paper_mario.png
+│       ├── perfect_dark.png
+│       ├── sm64.png
+│       ├── smash_bros.png
+│       ├── starfox64.png
 │       ├── wave_race_64.png
-│       └── megaman64.png
+│       ├── zelda_mm.png
+│       └── zelda_oot.png
 │
-└── saves/                    # Local save data (.sav / .state)
+├── data/                          # EmulatorJS core files
+│   ├── emu-css.css                # Emulator canvas + fullscreen styles
+│   ├── loader.js                  # EmulatorJS loader
+│   ├── n64.js                     # N64 JavaScript bridge
+│   └── n64.wasm                   # N64 WebAssembly core
+│
+├── roms/                          # N64 ROM files (ZIP)
+│   ├── banjo_kazooie.zip
+│   ├── sm64.zip
+│   ├── smash_bros.zip
+│   ├── starfox64.zip
+│   └── (add more ROMs later)
+│
+├── .nojekyll                      # Disables Jekyll on GitHub Pages
+├── 404.html                       # Custom 404 page
+├── README.md                      # Project documentation
+│
+├── config.js                      # Emulator settings (WASD, performance)
+├── games.json                     # Games database
+├── index.html                     # Main menu UI
+├── player.html                    # Emulator runtime page
+├── style.css                      # Dark theme styling
+│
+├── sw.js                          # Service Worker (offline / caching)
+├── update.js                      # Update handler / cache busting
