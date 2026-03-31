@@ -1,59 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcore-64 Player</title>
-    <!-- Your main styles and performance fixes -->
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="data/emu-css.css">
-    <script src="config.js"></script>
     <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            overflow: hidden;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; display: flex; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Sidebar Styling */
+        #sidebar { width: 260px; background: #111; color: white; display: flex; flex-direction: column; border-right: 1px solid #333; z-index: 100; }
+        .sidebar-header { padding: 15px; border-bottom: 1px solid #333; background: #1a1a1a; }
+        #search-bar { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #444; background: #000; color: #fff; box-sizing: border-box; outline: none; }
+        
+        #game-list-items { flex-grow: 1; overflow-y: auto; }
+        .game-link { display: flex; align-items: center; padding: 12px 15px; color: #bbb; text-decoration: none; font-size: 13px; border-bottom: 1px solid #222; transition: 0.2s; gap: 12px; }
+        .game-link:hover { background: #222; color: #fff; }
+        .game-link.active { background: #d32f2f; color: white; border-bottom-color: #d32f2f; }
+        .game-link img { width: 35px; height: 35px; object-fit: cover; border-radius: 3px; background: #000; flex-shrink: 0; }
 
-        #game-container {
-            width: 100vw;
-            height: 100vh;
-        }
+        /* Emulator Container */
+        #game-container { flex-grow: 1; height: 100vh; position: relative; }
     </style>
 </head>
-
 <body>
+
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <input type="text" id="search-bar" placeholder="Search games...">
+        </div>
+        <div id="game-list-items"></div>
+    </div>
 
     <div id="game-container"></div>
 
-    <script>
-        /// 1. EXTRACT ROM NAME
-const params = new URLSearchParams(window.location.search);
-const gameFile = params.get('game');
+    <script type="text/javascript">
+        const params = new URLSearchParams(window.location.search);
+        let currentRom = params.get('game');
 
-if (!gameFile) {
-    alert("No ROM found! Returning to Menu.");
-    window.location.href = 'index.html';
-}
+        async function initLibrary() {
+            try {
+                const response = await fetch('games.json');
+                const games = await response.json();
+                const listContainer = document.getElementById('game-list-items');
+                const searchBar = document.getElementById('search-bar');
 
-// 2. ATTACH CONFIG TO WINDOW (Required for loader.js to find them)
-window.EJS_player = '#game-container';
-window.EJS_core = 'n64';
-window.EJS_gameUrl = 'roms/' + gameFile; 
-window.EJS_pathtodata = 'data/';         // Must have the trailing slash
-window.EJS_startOnLoaded = true;         // Auto-starts once ROM is ready
+                // Function to render the list
+                const renderGames = (filter = "") => {
+                    listContainer.innerHTML = "";
+                    games.filter(g => g.title.toLowerCase().includes(filter.toLowerCase())).forEach(game => {
+                        const a = document.createElement('a');
+                        // Use your JSON 'rom' field, stripping 'roms/' for the URL param
+                        const romFilename = game.rom.replace('roms/', '');
+                        a.href = `?game=${romFilename}`;
+                        a.className = 'game-link';
+                        if (romFilename === currentRom) a.classList.add('active');
+                        
+                        a.innerHTML = `<img src="${game.boxart}" onerror="this.src='assets/logo.png'"> <span>${game.title}</span>`;
+                        listContainer.appendChild(a);
+                    });
+                };
 
-// 3. OPTIONAL SETTINGS
-window.EJS_threads = false;              // Try setting to FALSE if it hangs on a black screen
-window.EJS_performance = 'high';
+                // Initial render
+                renderGames();
 
+                // Search logic
+                searchBar.addEventListener('input', (e) => renderGames(e.target.value));
+
+                // Auto-load first game if none selected
+                if (!currentRom && games.length > 0) {
+                    const firstGame = games[0].rom.replace('roms/', '');
+                    window.location.search = `?game=${firstGame}`;
+                }
+            } catch (err) {
+                console.error("Library failed to load:", err);
+            }
+        }
+
+        initLibrary();
+
+        // EMULATORJS CONFIG
+        window.EJS_player = '#game-container';
+        window.EJS_core = 'n64'; 
+        window.EJS_gameUrl = currentRom ? 'roms/' + currentRom : '';
+        window.EJS_pathtodata = 'data/'; 
+        window.EJS_threads = false; 
+        window.EJS_startOnLoaded = true;
     </script>
 
-    <!-- 4. ENGINE LOADER: The script that starts the WASM engine -->
     <script src="data/loader.js"></script>
 
 </body>
-
 </html>
