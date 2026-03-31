@@ -26,39 +26,48 @@
 ## 📁 Project Structure
 ```text
 Webcore-64/
-├── index.html               # Main Menu (Fetches games.json)
-├── player.html              # Emulator Engine (Runs the .zips)
-├── config.js                # WASD & ChromeOS Performance Fixes
-├── games.json               # Database (The 10 Games List)
-├── style.css                # Dark Theme (Clean & Professional)
-├── .gitignore               # Keeps /saves/ off GitHub
 │
-├── data/                    # EmulatorJS CDN or Local Loader files
+├── index.html                # Main Menu (loads games.json)
+├── player.html               # Emulator runtime page
+├── config.js                 # WASD controls + ChromeOS tweaks
+├── games.json                # Game database
+├── style.css                 # Dark UI theme
+├── .gitignore                # Ignores /saves/
 │
-├── roms/                    # Game Files (Must match games.json)
+├── data/                     # EmulatorJS core files
+│   ├── emu-css.css           # Emulator display styles
+│   ├── loader.js             # EmulatorJS loader (required)
+│   ├── n64.js                # N64 JavaScript core
+│   └── n64.wasm              # N64 WebAssembly binary
+│
+├── roms/                     # N64 ROMs (ZIP only)
 │   ├── sm64.zip
 │   ├── zelda_oot.zip
 │   ├── zelda_mm.zip
 │   ├── goldeneye.zip
 │   ├── banjo_kazooie.zip
+│   ├── banjo_tooie.zip
 │   ├── starfox64.zip
 │   ├── perfect_dark.zip
 │   ├── smash_bros.zip
 │   ├── paper_mario.zip
-│   └── wave_race_64.zip
+│   ├── wave_race_64.zip
+│   └── megaman64.zip
 │
-├── assets/                  
-│   ├── logo.png
-│   └── boxart/              # Image Thumbnails
+├── assets/
+│   ├── logo.png              # App logo
+│   └── boxart/               # Game thumbnails
 │       ├── sm64.png
 │       ├── zelda_oot.png
 │       ├── zelda_mm.png
 │       ├── goldeneye.png
 │       ├── banjo_kazooie.png
+│       ├── banjo_tooie.png
 │       ├── starfox64.png
 │       ├── perfect_dark.png
 │       ├── smash_bros.png
 │       ├── paper_mario.png
-│       └── wave_race_64.png
+│       ├── wave_race_64.png
+│       └── megaman64.png
 │
-└── saves/                   # Local storage for .sav and .state
+└── saves/                    # Local save data (.sav / .state)
