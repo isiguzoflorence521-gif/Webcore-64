@@ -9,12 +9,12 @@
         /* Specific tweaks for smaller, cleaner cards */
         .grid-container {
             display: grid;
-            /* Changed minmax from 180px to 140px for smaller cards */
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             padding: 20px;
             max-width: 1000px;
             margin: 0 auto;
+            min-height: 200px;
         }
         
         .logo-container {
@@ -23,7 +23,7 @@
         }
 
         .logo {
-            max-width: 220px; /* Controlled logo size */
+            max-width: 220px;
             height: auto;
         }
 
@@ -35,39 +35,81 @@
             margin-top: 10px;
         }
 
+        .game-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            border-color: #555;
+        }
+
+        .game-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            display: block;
+        }
+
         .game-card h3 {
-            font-size: 12px; /* Smaller text for smaller cards */
+            font-size: 12px;
             padding: 8px;
+            margin: 0;
+            color: white;
+            text-align: center;
+        }
+
+        .status-msg {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #888;
+            padding: 20px;
+            font-family: sans-serif;
         }
     </style>
 </head>
 <body>
 
     <header class="logo-container">
-        <!-- Your Google Drawings Logo -->
         <img src="assets/logo.png" alt="Webcore 64" class="logo">
         <div class="tagline">Classic Power, Modern Web</div>
     </header>
 
     <main id="game-grid" class="grid-container">
-        <!-- Games inject here -->
+        <div class="status-msg">Loading games...</div>
     </main>
 
     <script>
-        // Service Worker for Offline/404
+        // Service Worker for Offline
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js').catch(() => {});
         }
 
+        const grid = document.getElementById('game-grid');
+
         fetch('games.json')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error(`Could not load games.json (Status: ${res.status})`);
+                return res.json();
+            })
             .then(games => {
-                const grid = document.getElementById('game-grid');
+                grid.innerHTML = ''; // Clear loading message
+                
+                if (!Array.isArray(games) || games.length === 0) {
+                    grid.innerHTML = '<div class="status-msg">No games found in games.json</div>';
+                    return;
+                }
+
                 games.forEach(game => {
                     const card = document.createElement('div');
                     card.className = 'game-card';
                     card.innerHTML = `
-                        <img src="${game.boxart}" alt="${game.title}">
+                        <img src="${game.boxart}" alt="${game.title}" onerror="this.src='assets/placeholder.png'">
                         <h3>${game.title}</h3>
                     `;
                     card.onclick = () => {
@@ -76,7 +118,15 @@
                     grid.appendChild(card);
                 });
             })
-            .catch(err => console.error("Library Load Error:", err));
+            .catch(err => {
+                console.error("Library Load Error:", err);
+                grid.innerHTML = `
+                    <div class="status-msg" style="color: #ff4444;">
+                        <strong>Error:</strong> ${err.message}<br>
+                        <small>Make sure you are running a local server (like Live Server).</small>
+                    </div>`;
+            });
     </script>
 </body>
 </html>
+
