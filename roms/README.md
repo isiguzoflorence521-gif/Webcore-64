@@ -9,11 +9,11 @@ This folder contains the N64 game files optimized for the **Webcore 64** engine.
 
 ### Active Library:
 * **Banjo-Kazooie** (`banjo_kazooie.zip`)
-* **Paper Mario** (`paper_mario.zip`) - *Specialized HLE fix for Pause Menu lag.*
+* **Paper Mario** (`paper_mario.zip`) 
 * **Super Mario 64** (`sm64.zip`)
 * **Super Smash Bros.** (`smash_bros.zip`)
 * **Star Fox 64** (`starfox64.zip`)
-* **Wave Race 64** (`wave_race_64.zip`) - *Optimized Threaded Rendering for water physics.*
+* **Wave Race 64** (`wave_race_64.zip`)
 
 ### 🚀 Coming Soon (In Testing):
 We are currently tuning the **8MB Expansion Pak** and **60FPS patches** for:
