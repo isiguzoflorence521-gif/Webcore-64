@@ -1,4 +1,4 @@
-![Project Logo](assets/Logo-gradient.png)
+![Project Logo](assets/banner.png)
 # 🚀 Webcore 64
 
 
