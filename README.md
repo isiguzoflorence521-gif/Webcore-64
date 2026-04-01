@@ -29,12 +29,12 @@ Webcore-64/
 │
 ├── .github/
 │   └── workflows/
-│       ├── node.js.yml            # Node / CI workflow (optional)
-│       └── static.yml             # GitHub Pages deployment workflow
+│       ├── node.js.yml
+│       └── static.yml
 │
 ├── assets/
-│   ├── logo.png                   # App logo
-│   └── boxart/                    # Game thumbnails
+│   ├── logo.png
+│   └── boxart/
 │       ├── banjo_kazooie.png
 │       ├── banjo_tooie.png
 │       ├── goldeneye.png
@@ -48,28 +48,29 @@ Webcore-64/
 │       ├── zelda_mm.png
 │       └── zelda_oot.png
 │
-├── data/                          # EmulatorJS core files
-│   ├── emu-css.css                # Emulator canvas + fullscreen styles
-│   ├── loader.js                  # EmulatorJS loader
-│   ├── n64.js                     # N64 JavaScript bridge
-│   └── n64.wasm                   # N64 WebAssembly core
+├── data/
+│   ├── emu-css.css
+│   ├── loader.js
+│   ├── n64.js
+│   └── n64.wasm
 │
-├── roms/                          # N64 ROM files (ZIP)
+├── roms/
 │   ├── banjo_kazooie.zip
+│   ├── paper_mario.zip        <-- Added
 │   ├── sm64.zip
 │   ├── smash_bros.zip
 │   ├── starfox64.zip
-│   └── (add more ROMs later)
+│   └── wave_race_64.zip       <-- Added
 │
-├── .nojekyll                      # Disables Jekyll on GitHub Pages
-├── 404.html                       # Custom 404 page
-├── README.md                      # Project documentation
+├── .nojekyll
+├── 404.html
+├── README.md
 │
-├── config.js                      # Emulator settings (WASD, performance)
-├── games.json                     # Games database
-├── index.html                     # Main menu UI
-├── player.html                    # Emulator runtime page
-├── style.css                      # Dark theme styling
+├── config.js
+├── games.json
+├── index.html
+├── player.html
+├── style.css
 │
-├── sw.js                          # Service Worker (offline / caching)
-├── update.js                      # Update handler / cache busting
+├── sw.js
+└── update.js
