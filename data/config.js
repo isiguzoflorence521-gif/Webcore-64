@@ -1,14 +1,6 @@
-/** 
- * Webcore 64 Performance & Control Config
- * Optimized for ChromeOS and WebCore Architecture
- */
-
-// Performance Toggles
-window.EJS_threads = true;        // Enable SharedArrayBuffer for multi-threading
-window.EJS_enable_webgl2 = true; // Use modern GPU rendering
-window.EJS_DEBUG_XX = false;     // Set true only for development
-
-// Default WASD Controls for N64 Analog
+window.EJS_threads = true;        
+window.EJS_enable_webgl2 = true; 
+window.EJS_DEBUG_XX = false;     
 window.EJS_buttons = {
     'up': 'w',
     'down': 's',
@@ -26,3 +18,4 @@ window.EJS_buttons = {
     'c-left': 'n',
     'c-right': 'p'
 };
+
