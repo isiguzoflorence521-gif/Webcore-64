@@ -1,11 +1,12 @@
 (async function() {
     try {
-        const enginePath = "data/src/";
+        const repoName = "/Webcore-64"; 
+        const enginePath = repoName + "/data/src/";
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = enginePath + "emulator.min.css";
         document.head.appendChild(link);
-        const module = await import("./src/emulator.min.js");
+        const module = await import(enginePath + "emulator.min.js");
         const EmulatorJS = module.default;
 
         const config = {
@@ -16,9 +17,7 @@
         };
 
         window.EJS_emulator = new EmulatorJS(document.getElementById('game'), config);
-        console.log("Webcore 64: Running from data/src/");
-
     } catch (e) {
-        console.error("Webcore 64: Still can't find files in data/src/", e);
+        console.error("Webcore 64: Still failing to load from " + enginePath, e);
     }
 })();
