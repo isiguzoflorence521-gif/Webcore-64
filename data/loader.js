@@ -1,51 +1,46 @@
-const folderPath = (path) => {
-    const filename = path.split("/").pop();
-    return path.substring(0, path.length - filename.length);
-};
-
-let scriptPath = (typeof window.EJS_pathtodata === "string") ? window.EJS_pathtodata : folderPath((new URL(document.currentScript.src)).pathname);
-if (!scriptPath.endsWith("/")) scriptPath += "/";
-
-function resolvePath(path) {
-    // This fix removes the "src/" subfolder requirement
-    return scriptPath + path;
-}
-
-async function loadScript(file) {
-    const script = resolvePath(file);
-    try {
-        const module = await import(script);
-        return module.default;
-    } catch (e) {
-        console.error("Failed to load script:", script);
-        return null;
-    }
-}
-
-function loadStyle(file) {
-    let css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = resolvePath(file);
-    document.head.appendChild(css);
-}
-
 (async function() {
-    // Force load the minified files you downloaded with curl
-    const EmulatorJS = await loadScript("emulator.min.js");
-    loadStyle("emulator.min.css");
+    try {
+        // Automatically find the path to this script (the 'data/' folder)
+        const currentScriptPath = document.currentScript.src;
+        const dataPath = currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1);
+        
+        console.log("Webcore 64: Loading engine from", dataPath);
 
-    if (!EmulatorJS) {
-        console.error("Emulator engine not found in /data/ folder.");
-        return;
+        // 1. Inject CSS
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = dataPath + "emulator.min.css";
+        document.head.appendChild(link);
+
+        // 2. Import Engine Module
+        // We use a cache-buster (?v=1) to ensure the browser doesn't use a broken old version
+        const module = await import(dataPath + "emulator.min.js?v=1");
+        const EmulatorJS = module.default;
+
+        if (!EmulatorJS) throw new Error("EmulatorJS module failed to export.");
+
+        // 3. Configuration
+        const config = {
+            gameUrl: window.EJS_gameUrl,
+            dataPath: dataPath, // Pass the detected path to the emulator
+            system: "n64",
+            startOnLoad: true,
+            gameName: window.EJS_gameName || "N64 Game"
+        };
+
+        // 4. Initialize in the 'game' div
+        const container = document.getElementById('game');
+        if (!container) {
+            console.error("Error: Could not find <div id='game'> in your HTML.");
+            return;
+        }
+
+        window.EJS_emulator = new EmulatorJS(container, config);
+        console.log("Webcore 64: Engine initialized successfully!");
+
+    } catch (e) {
+        console.error("Webcore 64 Critical Load Error:", e.message);
+        console.warn("Ensure emulator.min.js and emulator.min.css are in your /data/ folder.");
     }
-
-    const config = {
-        gameUrl: window.EJS_gameUrl,
-        dataPath: scriptPath,
-        system: "n64",
-        gameName: window.EJS_gameName || "N64 Game",
-        startOnLoad: true
-    };
-
-    window.EJS_emulator = new EmulatorJS(document.getElementById('game'), config);
 })();
+
