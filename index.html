@@ -6,71 +6,120 @@
     <title>Webcore 64 Library</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #111; color: white; font-family: sans-serif; text-align: center; }
+        body { background: #111; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; }
+        header { padding: 40px 20px; background: #000; }
+        
+        /* Main Logo Styling */
+        .main-logo { 
+            width: 300px; 
+            max-width: 80%; 
+            image-rendering: pixelated; 
+            margin-bottom: 10px;
+        }
+
         .search-container { margin: 20px; }
-        #searchBar { padding: 10px; width: 300px; border-radius: 5px; border: none; }
+        #searchBar { 
+            padding: 12px 20px; 
+            width: 400px; 
+            max-width: 90%; 
+            border-radius: 25px; 
+            border: 2px solid #333; 
+            background: #222; 
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        #searchBar:focus { border-color: #f00; }
+
         .game-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 20px; 
-            padding: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 25px; 
+            padding: 40px; 
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
         .game-card { 
-            background: #222; 
-            padding: 10px; 
-            border-radius: 8px; 
+            background: #1a1a1a; 
+            padding: 15px; 
+            border-radius: 12px; 
             cursor: pointer; 
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
         }
-        .game-card:hover { transform: scale(1.05); background: #333; }
-        .game-card img { width: 100%; border-radius: 4px; height: 200px; object-fit: cover; }
-        .game-card p { margin-top: 10px; font-size: 14px; height: 40px; overflow: hidden; }
+        .game-card:hover { 
+            transform: translateY(-10px); 
+            background: #252525; 
+            border-color: #f00;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Box Art Styling */
+        .game-card img { 
+            width: 100%; 
+            aspect-ratio: 3/4; 
+            border-radius: 6px; 
+            object-fit: cover; 
+            background: #000; /* Background color for missing images */
+        }
+        .game-card p { 
+            margin: 15px 0 0; 
+            font-weight: bold; 
+            font-size: 14px; 
+            height: 34px; 
+            overflow: hidden; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 <body>
 
-    <h1>🚀 Webcore 64</h1>
-
-    <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Search 388+ titles...">
-    </div>
+    <header>
+        <!-- Correct Path for Logo - Ensure file is named 'logo.png' in 'assets/' -->
+        <img src="assets/logo.png" alt="Webcore 64" class="main-logo" onerror="this.src='https://nintendo.com'">
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search the library...">
+        </div>
+    </header>
 
     <div id="gameGrid" class="game-grid">
-        <!-- Games will be injected here by JavaScript -->
+        <!-- Games dynamically loaded here -->
     </div>
 
     <script>
         let allGames = [];
 
-        // 1. Fetch the games.json file
+        // Fetches your games database
         fetch('games.json')
             .then(res => res.json())
             .then(data => {
                 allGames = data;
                 displayGames(allGames);
             })
-            .catch(err => console.error("Error loading games.json:", err));
+            .catch(err => console.error("Could not load games.json. Check the file location.", err));
 
-        // 2. Function to display the grid
         function displayGames(games) {
             const grid = document.getElementById('gameGrid');
-            grid.innerHTML = ''; // Clear current list
+            grid.innerHTML = ''; 
 
             games.forEach(game => {
                 const card = document.createElement('div');
                 card.className = 'game-card';
-                // Clicking a card redirects to player.html with the ROM path
                 card.onclick = () => window.location.href = `player.html?game=${encodeURIComponent(game.file)}`;
                 
+                // image-rendering fix and placeholder for boxart
                 card.innerHTML = `
-                    <img src="${game.image}" alt="${game.title}" onerror="this.src='assets/boxart/placeholder.png'">
+                    <img src="${game.image}" alt="${game.title}" 
+                         onerror="this.src='https://placeholder.com'">
                     <p>${game.title}</p>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // 3. Search Logic
         document.getElementById('searchBar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allGames.filter(g => g.title.toLowerCase().includes(term));
