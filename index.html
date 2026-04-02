@@ -3,130 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webcore 64 | Library</title>
+    <title>Webcore 64 Library</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Specific tweaks for smaller, cleaner cards */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            min-height: 200px;
+        body { background: #111; color: white; font-family: sans-serif; text-align: center; }
+        .search-container { margin: 20px; }
+        #searchBar { padding: 10px; width: 300px; border-radius: 5px; border: none; }
+        .game-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
         }
-        
-        .logo-container {
-            text-align: center;
-            padding: 30px 10px;
-        }
-
-        .logo {
-            max-width: 220px;
-            height: auto;
-        }
-
-        .tagline {
-            color: #888;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        .game-card {
-            cursor: pointer;
+        .game-card { 
+            background: #222; 
+            padding: 10px; 
+            border-radius: 8px; 
+            cursor: pointer; 
             transition: transform 0.2s;
-            background: #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #333;
         }
-
-        .game-card:hover {
-            transform: scale(1.05);
-            border-color: #555;
-        }
-
-        .game-card img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            object-fit: cover;
-            display: block;
-        }
-
-        .game-card h3 {
-            font-size: 12px;
-            padding: 8px;
-            margin: 0;
-            color: white;
-            text-align: center;
-        }
-
-        .status-msg {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #888;
-            padding: 20px;
-            font-family: sans-serif;
-        }
+        .game-card:hover { transform: scale(1.05); background: #333; }
+        .game-card img { width: 100%; border-radius: 4px; height: 200px; object-fit: cover; }
+        .game-card p { margin-top: 10px; font-size: 14px; height: 40px; overflow: hidden; }
     </style>
 </head>
 <body>
 
-    <header class="logo-container">
-        <img src="assets/logo.png" alt="Webcore 64" class="logo">
-        <div class="tagline">Classic Power, Modern Web</div>
-    </header>
+    <h1>🚀 Webcore 64</h1>
 
-    <main id="game-grid" class="grid-container">
-        <div class="status-msg">Loading games...</div>
-    </main>
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search 388+ titles...">
+    </div>
+
+    <div id="gameGrid" class="game-grid">
+        <!-- Games will be injected here by JavaScript -->
+    </div>
 
     <script>
-        // Service Worker for Offline
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
+        let allGames = [];
+
+        // 1. Fetch the games.json file
+        fetch('games.json')
+            .then(res => res.json())
+            .then(data => {
+                allGames = data;
+                displayGames(allGames);
+            })
+            .catch(err => console.error("Error loading games.json:", err));
+
+        // 2. Function to display the grid
+        function displayGames(games) {
+            const grid = document.getElementById('gameGrid');
+            grid.innerHTML = ''; // Clear current list
+
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                // Clicking a card redirects to player.html with the ROM path
+                card.onclick = () => window.location.href = `player.html?game=${encodeURIComponent(game.file)}`;
+                
+                card.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}" onerror="this.src='assets/boxart/placeholder.png'">
+                    <p>${game.title}</p>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        const grid = document.getElementById('game-grid');
-
-        fetch('games.json')
-            .then(res => {
-                if (!res.ok) throw new Error(`Could not load games.json (Status: ${res.status})`);
-                return res.json();
-            })
-            .then(games => {
-                grid.innerHTML = ''; // Clear loading message
-                
-                if (!Array.isArray(games) || games.length === 0) {
-                    grid.innerHTML = '<div class="status-msg">No games found in games.json</div>';
-                    return;
-                }
-
-                games.forEach(game => {
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    card.innerHTML = `
-                        <img src="${game.boxart}" alt="${game.title}" onerror="this.src='assets/placeholder.png'">
-                        <h3>${game.title}</h3>
-                    `;
-                    card.onclick = () => {
-                        window.location.href = `player.html?game=${encodeURIComponent(game.rom)}`;
-                    };
-                    grid.appendChild(card);
-                });
-            })
-            .catch(err => {
-                console.error("Library Load Error:", err);
-                grid.innerHTML = `
-                    <div class="status-msg" style="color: #ff4444;">
-                        <strong>Error:</strong> ${err.message}<br>
-                        <small>Make sure you are running a local server (like Live Server).</small>
-                    </div>`;
-            });
+        // 3. Search Logic
+        document.getElementById('searchBar').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allGames.filter(g => g.title.toLowerCase().includes(term));
+            displayGames(filtered);
+        });
     </script>
 </body>
 </html>
-
