@@ -73,4 +73,4 @@ Webcore-64/
 ├── style.css
 │
 ├── sw.js
-└── update.js
+├── update.js
