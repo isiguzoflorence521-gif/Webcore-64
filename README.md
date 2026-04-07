@@ -26,51 +26,43 @@
 ## 📁 Project Structure
 ```text
 Webcore-64/
-│
 ├── .github/
 │   └── workflows/
 │       ├── node.js.yml
 │       └── static.yml
-│
 ├── assets/
+│   ├── boxart/           # All 12+ game covers (.png)
+│   ├── Logo-gradient.png
+│   ├── Logo-plain.png
+│   ├── banner.png
 │   ├── logo.png
-│   └── boxart/
-│       ├── banjo_kazooie.png
-│       ├── banjo_tooie.png
-│       ├── goldeneye.png
-│       ├── megaman64.png
-│       ├── paper_mario.png
-│       ├── perfect_dark.png
-│       ├── sm64.png
-│       ├── smash_bros.png
-│       ├── starfox64.png
-│       ├── wave_race_64.png
-│       ├── zelda_mm.png
-│       └── zelda_oot.png
-│
-├── data/
-│   ├── emu-css.css
-│   ├── loader.js
-│   ├── n64.js
-│   └── n64.wasm
-│
-├── roms/
+│   └── startup.mp3
+├── data/                 # Rebuilt via NPM
+│   ├── compression/      # zip/7z extraction logic
+│   ├── cores/            # Core-specific metadata
+│   ├── localization/     # Multi-language JSON files
+│   ├── src/              # Core engine (emulator.js, storage.js, etc.)
+│   ├── config.js
+│   ├── emulator.css
+│   ├── loader.js         # The script your player.html calls
+│   ├── n64.js            # N64 specific core script
+│   └── version.json
+├── roms/                 # Your N64 game library (.zip)
 │   ├── banjo_kazooie.zip
-│   ├── paper_mario.zip        <-- Added
+│   ├── goldeneye.zip
+│   ├── paper_mario.zip
 │   ├── sm64.zip
 │   ├── smash_bros.zip
 │   ├── starfox64.zip
-│   └── wave_race_64.zip       <-- Added
-│
-├── .nojekyll
+│   └── wave_race_64.zip
+├── .nojekyll             # Crucial: Tells GitHub to serve all folders
 ├── 404.html
+├── LICENSE
 ├── README.md
-│
-├── config.js
-├── games.json
-├── index.html
-├── player.html
-├── style.css
-│
-├── sw.js
-├── update.js
+├── games.json            # Connects titles to roms/ and assets/
+├── index.html            # Main Library UI
+├── package.json          # NPM configuration
+├── player.html           # The emulator loader page
+├── style.css             # Site styling
+├── sw.js                 # Service worker for offline use
+└── update.js             # Update logic
