@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcore 64 Library</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         body { background: #111; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; }
         header { padding: 40px 20px; background: #000; }
         
-        /* Main Logo Styling */
         .main-logo { 
             width: 300px; 
             max-width: 80%; 
@@ -55,13 +53,12 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        /* Box Art Styling */
         .game-card img { 
             width: 100%; 
             aspect-ratio: 3/4; 
             border-radius: 6px; 
             object-fit: cover; 
-            background: #000; /* Background color for missing images */
+            background: #000; 
         }
         .game-card p { 
             margin: 15px 0 0; 
@@ -78,8 +75,7 @@
 <body>
 
     <header>
-        <!-- Correct Path for Logo - Ensure file is named 'logo.png' in 'assets/' -->
-        <img src="assets/logo.png" alt="Webcore 64" class="main-logo" onerror="this.src='https://nintendo.com'">
+        <img src="assets/logo.png" alt="Webcore 64" class="main-logo" onerror="this.src='https://placeholder.com'">
         <div class="search-container">
             <input type="text" id="searchBar" placeholder="Search the library...">
         </div>
@@ -91,13 +87,18 @@
 
     <script>
         let allGames = [];
+        
+        // Fetch the local games.json file
         fetch('games.json')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Could not find games.json");
+                return res.json();
+            })
             .then(data => {
                 allGames = data;
                 displayGames(allGames);
             })
-            .catch(err => console.error("Could not load games.json. Check the file location.", err));
+            .catch(err => console.error("Error loading library:", err));
 
         function displayGames(games) {
             const grid = document.getElementById('gameGrid');
@@ -106,11 +107,21 @@
             games.forEach(game => {
                 const card = document.createElement('div');
                 card.className = 'game-card';
-                card.onclick = () => window.location.href = `player.html?game=${encodeURIComponent(game.file)}`;
                 
-                // image-rendering fix and placeholder for boxart
+                /* 
+                   FIX: Changed 'game.file' to 'game.game' 
+                   to match your JSON key exactly. 
+                */
+                card.onclick = () => {
+                    window.location.href = `player.html?game=${encodeURIComponent(game.game)}`;
+                };
+                
+                /* 
+                   FIX: Changed 'game.image' to 'game.boxart' 
+                   to match your JSON key exactly. 
+                */
                 card.innerHTML = `
-                    <img src="${game.image}" alt="${game.title}" 
+                    <img src="${game.boxart}" alt="${game.title}" 
                          onerror="this.src='https://placeholder.com'">
                     <p>${game.title}</p>
                 `;
@@ -118,6 +129,7 @@
             });
         }
 
+        // Search filtering logic
         document.getElementById('searchBar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allGames.filter(g => g.title.toLowerCase().includes(term));
