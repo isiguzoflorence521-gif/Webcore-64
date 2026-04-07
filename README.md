@@ -1,4 +1,4 @@
-![Project Logo](assets/banner.png)
+![App Screenshot](assets/banner.png)
 # 🚀 Webcore 64
 
 
