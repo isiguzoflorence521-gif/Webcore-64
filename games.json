@@ -1,5 +1,5 @@
 [
-  { "title": "The Legend of Zelda: Ocarina of Time", "game": "roms/zelda_oot.7z", "boxart": "assets/boxart/zelda_oot.png" },
+  { "title": "The Legend of Zelda: Ocarina of Time", "game": "roms/zelda_oot.zip", "boxart": "assets/boxart/zelda_oot.png" },
   { "title": "Super Mario 64", "game": "roms/sm64.zip", "boxart": "assets/boxart/sm64.png" },
   { "title": "The Legend of Zelda: Majora's Mask", "game": "roms/zelda_mm.zip", "boxart": "assets/boxart/zelda_mm.png" },
   { "title": "GoldenEye 007", "game": "roms/goldeneye.zip", "boxart": "assets/boxart/goldeneye.png" },
