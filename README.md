@@ -13,6 +13,7 @@
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=EmulatorJS/EmulatorJS%2Cisiguzoflorence521-gif/Webcore-64&type=date&legend=top-left" />
  </picture>
 </a>
+
 ## ✨ Features
 - **Chromebook Optimized:** Pre-configured with the `Rice` video plugin to eliminate audio lag and stuttering.
 - **Fixed Controls:** Keyboard inputs are mapped to the N64 **Analog Stick** (WASD) so character movement works by default.
