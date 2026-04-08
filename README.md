@@ -13,6 +13,8 @@
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=EmulatorJS/EmulatorJS%2Cisiguzoflorence521-gif/Webcore-64&type=date&legend=top-left" />
  </picture>
 </a>
+> [NOTE]
+> WE NEED MORE STARS TO PASS EMULATORJS
 
 ## ✨ Features
 - **Chromebook Optimized:** Pre-configured with the `Rice` video plugin to eliminate audio lag and stuttering.
