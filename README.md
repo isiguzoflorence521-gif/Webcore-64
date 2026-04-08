@@ -66,6 +66,7 @@ Webcore-64/
 ├── style.css             # Site styling
 ├── sw.js                 # Service worker for offline use
 └── update.js             # Update logic
+
 ## Star History
 
 <a href="https://www.star-history.com/?repos=EmulatorJS%2FEmulatorJS%2Cisiguzoflorence521-gif%2FWebcore-64&type=date&legend=top-left">
