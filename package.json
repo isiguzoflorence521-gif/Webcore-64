@@ -1,23 +1,20 @@
 {
   "name": "webcore-64",
   "version": "0.1.0",
-  "description": "![App Screenshot](assets/banner.png) # 🚀 Webcore 64",
+  "description": "A high-performance Nintendo 64 (N64) emulator core for web browsers.",
   "main": "sw.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "keywords": [
+    "n64",
+    "nintendo-64",
+    "emulator",
+    "emulatorjs",
+    "retro-gaming",
+    "web-emulator"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/isiguzoflorence521-gif/Webcore-64.git"
+    "url": "https://github.com/isiguzoflorence521-gif/Webcore-64/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/isiguzoflorence521-gif/Webcore-64/issues"
-  },
-  "homepage": "https://github.com/isiguzoflorence521-gif/Webcore-64#readme",
   "dependencies": {
     "@emulatorjs/emulatorjs": "^4.2.3"
   }
