@@ -4,18 +4,6 @@
 
 **Webcore 64** is a high-performance, browser-based Nintendo 64 emulator library specifically optimized for **ChromeOS** and low-power hardware. It features a searchable database of the entire N64 library and custom configurations to fix common emulation bugs.
 
-## Star History
-
-<a href="https://www.star-history.com/?repos=EmulatorJS%2FEmulatorJS%2Cisiguzoflorence521-gif%2FWebcore-64&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=EmulatorJS/EmulatorJS%2Cisiguzoflorence521-gif/Webcore-64&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=EmulatorJS/EmulatorJS%2Cisiguzoflorence521-gif/Webcore-64&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=EmulatorJS/EmulatorJS%2Cisiguzoflorence521-gif/Webcore-64&type=date&legend=top-left" />
- </picture>
-</a>
-> [NOTE]
-> WE NEED MORE STARS TO PASS EMULATORJS
-
 ## ✨ Features
 - **Chromebook Optimized:** Pre-configured with the `Rice` video plugin to eliminate audio lag and stuttering.
 - **Fixed Controls:** Keyboard inputs are mapped to the N64 **Analog Stick** (WASD) so character movement works by default.
