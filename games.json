@@ -2,6 +2,7 @@
   { "title": "The Legend of Zelda: Ocarina of Time", "game": "roms/zelda_oot.zip", "boxart": "assets/boxart/zelda_oot.png" },
   { "title": "Super Mario 64", "game": "roms/sm64.zip", "boxart": "assets/boxart/sm64.png" },
   { "title": "The Legend of Zelda: Majora's Mask", "game": "roms/zelda_mm.zip", "boxart": "assets/boxart/zelda_mm.png" },
+  { "title": "F-Zero X", "game": "roms/fzero_x.zip", "boxart": "assets/boxart/fzero_x.png" },
   { "title": "GoldenEye 007", "game": "roms/goldeneye.zip", "boxart": "assets/boxart/goldeneye.png" },
   { "title": "Banjo-Kazooie", "game": "roms/banjo_kazooie.zip", "boxart": "assets/boxart/banjo_kazooie.png" },
   { "title": "Star Fox 64", "game": "roms/starfox64.zip", "boxart": "assets/boxart/starfox64.png" },
@@ -11,5 +12,4 @@
   { "title": "Wave Race 64", "game": "roms/wave_race_64.zip", "boxart": "assets/boxart/wave_race_64.png" },
   { "title": "Mega Man 64", "game": "roms/megaman64.zip", "boxart": "assets/boxart/megaman64.png" },
   { "title": "Banjo-Tooie", "game": "roms/banjo_tooie.zip", "boxart": "assets/boxart/banjo_tooie.png" }
-  { "title": "F-Zero X", "game": "roms/fzero_x.zip", "boxart": "assets/boxart/fzero_x.png" }
 ]
