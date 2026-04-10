@@ -11,4 +11,5 @@
   { "title": "Wave Race 64", "game": "roms/wave_race_64.zip", "boxart": "assets/boxart/wave_race_64.png" },
   { "title": "Mega Man 64", "game": "roms/megaman64.zip", "boxart": "assets/boxart/megaman64.png" },
   { "title": "Banjo-Tooie", "game": "roms/banjo_tooie.zip", "boxart": "assets/boxart/banjo_tooie.png" }
+  { "title": "F-Zero X", "game": "roms/fzero_x.zip", "boxart": "assets/boxart/fzero_x.png" }
 ]
